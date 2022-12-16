@@ -1,6 +1,7 @@
 <?php
     function connect() {
-        $host = "127.0.0.1";
+        // $host = "127.0.0.1";
+        $host = "localhost";
         $username = "jmorin_user";
         $password = "Jigglypants1";
         $database = "jmorin_mmda225_ecommerce";
