@@ -9,7 +9,7 @@
             $filterby = "where true";
         }
         $connect = connect();
-        $products = db_query($connect, "SELECT * FROM 'products' $filterby ORDER BY '$sortby';");
+        $products = db_query($connect, "SELECT * FROM `products` $filterby ORDER BY `$sort`;");
     }
     ?>
     <!DOCTYPE html>
@@ -25,7 +25,7 @@
             ?>
             <main>
                 <p>Sort By:</p>
-                <a href="products.php?sort=name">Name</a>
+                <a href="products.php?sort=product">Name</a>
                 <a href="products.php?sort=price">Price</a>
                 <a href="products.php?filter=Handheld">Handhelds</a>
                 <a href="products.php?filter=Console">Consoles</a>
@@ -34,12 +34,12 @@
             <?php
                 foreach ($products as $product) {
                     $id = $product["id"];
-                    $name = $product["name"];
+                    $name = $product["product"];
                     $price = $product["price"];
                     echo "<figure>";
-                    echo "img src=\" ./thumbnail/" . $product["thumbnail"] . "\">"
-                    echo "<figcaption>" . $product["name"] . " - " . $product["price"] . "</figcaption>";
-                    echo "</figure>"
+                    echo "<img src=\" ./thumbnail/" . $product["thumbnail"] . "\">";
+                    echo "<figcaption>" . $product["product"] . " - $" . $product["price"] . "</figcaption>";
+                    echo "</figure>";
                     echo "<a href=\" ./cartadd.php?id=" . $product["id"] . "&quantity=1\">Add to Cart</a>";
                 }
                 ?>

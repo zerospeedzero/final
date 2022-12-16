@@ -22,7 +22,7 @@
                     foreach ($products as $product) {
                         echo "<figure>";
                         echo "<img src=\"./thumbnail/" . $product["thumbnail"] . "\">";
-                        echo "<figcaption>" . $product["name"] . " - " . $product["price"] . "<a href=\"./cartadd.php?id=" . $product["id"] . "&quantity=1\">Add to Cart</a>" . "</figcaption>";
+                        echo "<figcaption>" . $product["product"] . " - " . $product["price"] . "<a href=\"./cartadd.php?id=" . $product["id"] . "&quantity=1\">Add to Cart</a>" . "</figcaption>";
                         echo "</figure>";
                     }
                 ?>

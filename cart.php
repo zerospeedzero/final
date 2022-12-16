@@ -29,21 +29,23 @@
                 </thead>
                 <tbody>
                     <?php
-                        foreach ($_SESSION["cart"] as $id => $quantity) {
-                            $product = db_query($connect, "select * from products where id=$id;")[0];
-                            echo "<tr>";
-                            echo "<td>" . $product["name"] . "</td>";
-                            echo "<td>" . numfmt_format($format, $product["price"] * $quantity) . "</td>";
-                            echo "<td>" .
-                                    '<form method="GET" action="cartadd.php">' .
-                                        '<input type="hidden" name="id" value="' . $id . '">' .
-                                        '<input type="number" name="quantity" value="' . $quantity . '">' .
-                                    '</form>' .
-                                "<td>";
-                            echo '<td><a href="cartadd.php?id=' . $id . '&quantity=0">Remove</a></td>';
-                            echo "</tr>";
-                            $subtotal = $subtotal + $product["price"] * $quantity;
-                        } 
+                        if (isset($_SESSION["cart"])) {
+                            foreach ($_SESSION["cart"] as $id => $quantity) {
+                                $product = db_query($connect, "select * from products where id=$id;")[0];
+                                echo "<tr>";
+                                echo "<td>" . $product["product"] . "</td>";
+                                echo "<td>" . numfmt_format($format, $product["price"] * $quantity) . "</td>";
+                                echo "<td>" .
+                                        '<form method="GET" action="cartadd.php">' .
+                                            '<input type="hidden" name="id" value="' . $id . '">' .
+                                            '<input type="number" name="quantity" value="' . $quantity . '">' .
+                                        '</form>' .
+                                    "<td>";
+                                echo '<td><a href="cartadd.php?id=' . $id . '&quantity=0">Remove</a></td>';
+                                echo "</tr>";
+                                $subtotal = $subtotal + $product["price"] * $quantity;
+                            }                             
+                        }
                     ?>
                 </tbody>
             </table>
@@ -60,6 +62,14 @@
                 $total = $subtotal + $gsttax;
                 print numfmt_format($format, $subtotal + $gsttax);
             ?></span>
+            <form action="./checkout.php" method="post">
+                <label for="customer">Customer name</label>
+                <input type=text id=customer name=customer required>
+                <label for="email">email</label>
+                <input type=email id=email name=email required>
+                <input type=hidden name=total value=<?php echo $total?>>
+                <input type=submit value="Check Out">
+            </form>
         </main>
         <?php
             require "assets/footer.php";
